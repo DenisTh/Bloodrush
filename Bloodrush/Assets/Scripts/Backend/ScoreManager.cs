@@ -16,7 +16,7 @@ public class ScoreManager : MonoBehaviour
     public static int calories { get; set; }
     public static float multiplier { get; set; }
     public static float calMultiplier { get; set; }
-
+	
     private void Start()
     {
         multiplier = 1;
