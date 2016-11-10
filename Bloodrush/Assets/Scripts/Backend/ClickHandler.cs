@@ -13,6 +13,7 @@ public class ClickHandler : MonoBehaviour
     {
         cam = Camera.main.GetComponent<Camera>();
         bm = GameObject.FindGameObjectWithTag("Managers").GetComponent<BeatManager>();
+        anim = GetComponent<Animator>();
 
         if (!GameObject.FindWithTag("Heart"))
             Debug.Log("No Heart found! Did you forget to tag it?");
@@ -43,6 +44,9 @@ public class ClickHandler : MonoBehaviour
     private void CastRay(Ray ray, LayerMask layer)
     {
         if (Physics.Raycast(ray, layer))
+        {
             bm.Incr();
+            anim.SetTrigger("Beat");
+        }
     }
 }
