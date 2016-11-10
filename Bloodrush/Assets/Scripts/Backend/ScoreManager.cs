@@ -1,22 +1,26 @@
-﻿using UnityEngine;
+﻿using System.Globalization;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class ScoreManager : MonoBehaviour
 {
     private static int obg;
     private static int cbg;
-    public int calorieBaseGain = 1;
-    public Text CALText;
-
-    public Text O2Text;
 
     public int oxygenBaseGain = 1;
+    public int calorieBaseGain = 1;
 
-    public static int oxygen { get; set; }
-    public static int calories { get; set; }
+    public Text CALText;
+    public Text O2Text;
+
+    //private BigInteger BigInteger;
+    public static long oxygen { get; set; }
+    public static long calories { get; set; }
     public static float multiplier { get; set; }
     public static float calMultiplier { get; set; }
-	
+
+    private long temp;
+
     private void Start()
     {
         multiplier = 1;
@@ -27,22 +31,22 @@ public class ScoreManager : MonoBehaviour
 
     private void Update()
     {
-        O2Text.text = oxygen.ToString();
-        CALText.text = calories.ToString();
+        O2Text.text = oxygen.ToString( "n0", new CultureInfo("de-DE"));
+        CALText.text = calories.ToString( "n0", new CultureInfo("de-DE") );
 
         //Debug.Log(calMultiplier + " " + cbg);
     }
 
-    private static int CalculateO2Amount()
+    private static long CalculateO2Amount()
     {
         var calc = oxygen + obg*multiplier;
-        return (int) calc;
+        return (long) calc;
     }
 
-    private static int CalculateCALAmount()
+    private static long CalculateCALAmount()
     {
         var calc = calories + cbg*calMultiplier;
-        return (int) calc;
+        return (long) calc;
     }
 
     public static void IncreaseOxygen()
@@ -50,7 +54,7 @@ public class ScoreManager : MonoBehaviour
         oxygen = CalculateO2Amount();
     }
 
-    public static void DecreaseOxygen(int amount)
+    public static void DecreaseOxygen(long amount)
     {
         oxygen = oxygen - amount;
     }
@@ -60,7 +64,7 @@ public class ScoreManager : MonoBehaviour
         calories = CalculateCALAmount();
     }
 
-    public static void DecreaseCalories(int amount)
+    public static void DecreaseCalories(long amount)
     {
         calories = calories - amount;
     }
