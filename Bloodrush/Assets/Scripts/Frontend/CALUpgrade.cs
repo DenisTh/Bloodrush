@@ -4,9 +4,9 @@ using System.Collections;
 
 public class CALUpgrade : Upgrade {
 
-    public int calMultIncr;
-    public int o2PbCost;
-    public int o2Cost;
+    public ulong calMultIncr;
+    public ulong o2PbCost;
+    public ulong o2Cost;
 
     private Button _upgradeButton;
 

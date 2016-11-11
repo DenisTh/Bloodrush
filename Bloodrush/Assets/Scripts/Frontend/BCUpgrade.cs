@@ -4,8 +4,8 @@ using UnityEngine.UI;
 
 public class BCUpgrade : Upgrade {
 
-    public int multiplierIncrease;
-    public int o2Cost;
+    public ulong multiplierIncrease;
+    public ulong o2Cost;
 
     private Button _upgradeButton;
 

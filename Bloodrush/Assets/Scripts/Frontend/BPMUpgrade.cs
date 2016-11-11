@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class BPMUpgrade : Upgrade {
 
     public float BPMIncrease;
-    public int CALCost;
+    public ulong CALCost;
 
     private Button _upgradeButton;
     private BeatManager _bm;

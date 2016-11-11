@@ -13,13 +13,23 @@ public class ScoreManager : MonoBehaviour
     public Text CALText;
     public Text O2Text;
 
-    //private BigInteger BigInteger;
-    public static long oxygen { get; set; }
-    public static long calories { get; set; }
+    public static ulong oxygen { get; set; }
+    public static ulong calories { get; set; }
     public static float multiplier { get; set; }
     public static float calMultiplier { get; set; }
 
-    private long temp;
+    private string[] numberStrings =
+    {
+        "n0",
+        "#,##0, Thousand",
+        "#,##0,, Million",
+        "#,##0,,, Billion",
+        "#,##0,,,, Trillion",
+        "#,##0,,,,, Quadrillion",
+        "#,##0,,,,,, Quintillion"
+    };
+
+    private int numberString;
 
     private void Start()
     {
@@ -31,22 +41,41 @@ public class ScoreManager : MonoBehaviour
 
     private void Update()
     {
-        O2Text.text = oxygen.ToString( "n0", new CultureInfo("de-DE"));
+        UpdateScoreString();
+        O2Text.text = oxygen.ToString(numberStrings[numberString], new CultureInfo("de-DE"));
+
+//        O2Text.text = oxygen.ToString( "n0", new CultureInfo("de-DE"));
         CALText.text = calories.ToString( "n0", new CultureInfo("de-DE") );
 
-        //Debug.Log(calMultiplier + " " + cbg);
+        Debug.Log(numberString);
     }
 
-    private static long CalculateO2Amount()
+    private void UpdateScoreString()
+    {
+        if (oxygen >= 1000 && oxygen < 1000000)
+            numberString = 1;
+        else if (oxygen >= 1000000 && oxygen < 1000000000)
+            numberString = 2;
+        else if (oxygen >= 1000000000 && oxygen < 1000000000000)
+            numberString = 3;
+        else if (oxygen >= 1000000000000 && oxygen < 1000000000000000)
+            numberString = 4;
+        else if (oxygen >= 1000000000000000 && oxygen < 1000000000000000000)
+            numberString = 5;
+        else if (oxygen >= 1000000000000000000)
+            numberString = 6;
+    }
+
+    private static ulong CalculateO2Amount()
     {
         var calc = oxygen + obg*multiplier;
-        return (long) calc;
+        return (ulong) calc;
     }
 
-    private static long CalculateCALAmount()
+    private static ulong CalculateCALAmount()
     {
         var calc = calories + cbg*calMultiplier;
-        return (long) calc;
+        return (ulong) calc;
     }
 
     public static void IncreaseOxygen()
@@ -54,7 +83,7 @@ public class ScoreManager : MonoBehaviour
         oxygen = CalculateO2Amount();
     }
 
-    public static void DecreaseOxygen(long amount)
+    public static void DecreaseOxygen(ulong amount)
     {
         oxygen = oxygen - amount;
     }
@@ -64,7 +93,7 @@ public class ScoreManager : MonoBehaviour
         calories = CalculateCALAmount();
     }
 
-    public static void DecreaseCalories(long amount)
+    public static void DecreaseCalories(ulong amount)
     {
         calories = calories - amount;
     }
